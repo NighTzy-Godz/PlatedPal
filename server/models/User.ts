@@ -34,7 +34,8 @@ const userSchema: Schema<IUser> = new Schema({
   },
   pfp: {
     type: String,
-    default: "",
+    default:
+      "https://res.cloudinary.com/doggodoggo228/image/upload/v1719548694/account_iu1nvc.png",
   },
 
   bio: {

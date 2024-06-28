@@ -12,12 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
+    "@types/joi": "^17.2.3",
     "@types/nodemon": "^1.19.6",
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "joi": "^17.13.3",
     "mongoose": "^8.4.4",
     "nodemon": "^3.1.4"
   },
