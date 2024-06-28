@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-const DB_URL = "mongodb://localhost:27017/platedpal";
+const DB_URL = process.env.DB_URL as string;
 
 mongoose
   .connect(DB_URL)

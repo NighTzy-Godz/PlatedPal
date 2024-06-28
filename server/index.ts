@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import express, { urlencoded, json } from "express";
 
 const app = express();
@@ -10,4 +12,5 @@ app.use(json());
 
 app.use("/api/user", userRoute);
 
-app.listen(PORT, () => console.log(`Connected to PORT ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Connected to PORT ${PORT}`));
+export default server;

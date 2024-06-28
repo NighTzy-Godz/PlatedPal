@@ -20,6 +20,10 @@ export const registerUser = async (
         .status(400)
         .send("Password and Confirm Password did not match");
 
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(409).send("User with this email already existed");
+
     const user = new User({
       firstName,
       lastName,
