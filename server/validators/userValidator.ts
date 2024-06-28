@@ -15,12 +15,19 @@ export const registerUserValidator = (
       "string.base": "Last Name should be a type of string",
       "string.empty": "Last Name cannot be empty",
     }),
-    email: Joi.string().email().required().messages({
-      "string.base": "Email should be a type of string",
-      "any.required": "Email is a required field ",
-      "string.empty": "Email cannot be empty",
-      "string.email": "Please enter a valid email",
-    }),
+    email: Joi.string()
+      .email({ tlds: { allow: true }, minDomainSegments: 2 })
+
+      .trim()
+      .required()
+      .messages({
+        "string.base": "Email should be a type of string",
+        "any.required": "Email is a required field ",
+        "string.empty": "Email cannot be empty",
+        "string.email": "Please enter a valid email",
+        "string.email.minDomainSegments": "Please enter a valid email",
+        "string.email.tlds": "Please enter a valid email",
+      }),
 
     password: Joi.string().min(5).required().messages({
       "string.base": "Password should be a type of string",
