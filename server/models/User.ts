@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const DB_URL = process.env.DB_URL as string;
-
+const jwtSecretPass = process.env.jwtSecretPass as string;
 mongoose
   .connect(DB_URL)
   .then(() => console.log("Connected to the datebase - User"))
@@ -21,6 +22,8 @@ interface IUser extends Document {
   followers?: number;
   following?: number;
   posts?: string[];
+
+  generateAuthToken(): string;
 }
 
 const userSchema: Schema<IUser> = new Schema({
@@ -55,6 +58,17 @@ const userSchema: Schema<IUser> = new Schema({
     required: true,
   },
 });
+
+userSchema.methods.generateAuthToken = function (this) {
+  const fullName = `${this.firstName} ${this.lastName}`;
+  const payload = {
+    fullName,
+    _id: this._id,
+    pfp: this.pfp,
+  };
+
+  return jwt.sign(payload, jwtSecretPass);
+};
 
 const User = mongoose.model<IUser>("User", userSchema);
 

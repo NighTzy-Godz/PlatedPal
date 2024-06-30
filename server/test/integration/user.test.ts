@@ -204,7 +204,7 @@ describe("/api/user", () => {
 
     it("will return an error if the email is not a valid email", async () => {
       const notValidEmail = {
-        email: "notvalidEmail@gmail.com",
+        email: "notvalidEmail@",
         password: "pass12345",
       };
 
