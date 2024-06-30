@@ -7,7 +7,6 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 jest.mock("jsonwebtoken");
 
-const mockedJwt = jwt as jest.Mocked<typeof jwt>;
 const userApiUrl = "/api/user";
 
 const userInfo = {

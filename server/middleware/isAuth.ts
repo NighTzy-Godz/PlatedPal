@@ -39,3 +39,5 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
+export default isAuth;
