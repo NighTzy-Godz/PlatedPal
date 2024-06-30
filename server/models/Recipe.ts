@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { Ingredients, TimeCount } from "../interfaces/recipeInterfaces";
 
 const DB_URL = process.env.DB_URL as string;
 
@@ -6,11 +7,6 @@ mongoose
   .connect(DB_URL)
   .then(() => console.log("Connected to the database - RECIPE"))
   .catch((err) => console.log("Error on recipe ", err));
-
-interface Ingredients {
-  ingredient: string;
-  unit: string;
-}
 
 interface IRecipe extends Document {
   creator: Schema.Types.ObjectId;
@@ -21,14 +17,8 @@ interface IRecipe extends Document {
   ingredients: Ingredients[];
   instructions: string[];
   servings: number;
-  prepTime: {
-    hours: number;
-    min: number;
-  };
-  cookTime: {
-    hours: number;
-    min: number;
-  };
+  prepTime: TimeCount;
+  cookTime: TimeCount;
 }
 
 const recipeSchema: Schema<IRecipe> = new Schema({
