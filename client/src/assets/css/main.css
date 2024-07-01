@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: Gelion_Reg;
+    src: url("../font/Gelion Regular.ttf");
+  }
+
+  @font-face {
+    font-family: Gelion_Bold;
+    src: url("../font/Gelion Bold.ttf");
+  }
+}
+
+p,
+span,
+li,
+input,
+a {
+  @apply font-gelionReg;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-gelionBold;
+}
+
+@layer base {
+  :root {
+    --bgColor: 255, 255, 255;
+    --mainColor: 255, 152, 56;
+    --mainColorDark: 247, 128, 20;
+
+    --error: 255, 64, 64;
+    --errorDark: 209, 18, 18;
+    --success: 17, 216, 216;
+    --successDark: 15, 194, 105;
+    --textColor: 35, 55, 72;
+    --inputPlaceholderColor: 207, 207, 207;
+    --black: 2, 2, 2;
+  }
+}
