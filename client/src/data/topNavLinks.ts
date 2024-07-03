@@ -10,7 +10,7 @@ const authenticatedLinks = [
   {
     id: 5,
     name: "Feed",
-    path: "/feed",
+    path: "/",
     icon: HomeIcon,
   },
   {
@@ -23,19 +23,19 @@ const authenticatedLinks = [
   {
     id: 1,
     name: "Shopping",
-    path: "/recipes",
+    path: "/shopping",
     icon: ShopIcon,
   },
   {
     id: 2,
     name: "Meal Planner",
-    path: "/recipes",
+    path: "/meal-planner",
     icon: PlannerIcon,
   },
   {
     id: 3,
     name: "Communities",
-    path: "/recipes",
+    path: "/communities",
     icon: CommunityIcon,
   },
   {
@@ -44,7 +44,6 @@ const authenticatedLinks = [
     path: "/saved",
     icon: SavedIcon,
   },
-  { id: 10, name: "Logout", path: "/logout", icon: LogoutIcon, active: true },
 ];
 
 const unauthenticatedLinks = [
@@ -57,17 +56,17 @@ const unauthenticatedLinks = [
   {
     id: 1,
     name: "Shopping",
-    path: "/recipes",
+    path: "/shopping",
   },
   {
     id: 2,
     name: "Meal Planner",
-    path: "/recipes",
+    path: "/meal-planner",
   },
   {
     id: 3,
     name: "Communities",
-    path: "/recipes",
+    path: "/communities",
   },
 ];
 

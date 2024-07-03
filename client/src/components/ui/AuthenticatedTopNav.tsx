@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../icons/Logo";
 import { authenticatedLinks } from "../../data/topNavLinks";
 
@@ -25,24 +25,26 @@ function AuthenticatedTopNav() {
   useEffect(() => {
     if (collapseNav) setIsShow(true);
   }, [windowX]);
-
+  //
   const renderNavLinks = authenticatedLinks.map((link) => {
-    const { id, name, path, active, icon: Icon } = link;
+    const { id, name, path, icon: Icon } = link;
     return (
       <li key={id}>
-        <Link
+        <NavLink
           to={path}
-          className={`lg:text-xl text-2xl  ${
-            active
-              ? "text-mainColor hover:text-mainColorDark"
-              : " text-textColor hover:text-dark"
-          }`}
+          className={({ isActive }) =>
+            `lg:text-xl text-2xl  ${
+              isActive
+                ? "text-mainColor hover:text-mainColorDark"
+                : " text-textColor hover:text-dark"
+            }`
+          }
         >
           <div className="flex gap-2">
             {collapseNav && <Icon className="lg:w-8 lg:h-8 h-7 w-7" />}
             <h4>{name}</h4>
           </div>
-        </Link>
+        </NavLink>
       </li>
     );
   });
@@ -76,8 +78,8 @@ function AuthenticatedTopNav() {
       </div>{" "}
       <div
         className={`transition-all duration-300 ${
-          isShow ? " translate-x-0 " : " -translate-x-full "
-        } px-4 absolute w-full top-[69px] bg-white pt-3 h-[92dvh] min-h-[650px] flex flex-col  order-3 `}
+          isShow && collapseNav ? " translate-x-0 " : " -translate-x-full "
+        } px-4 absolute w-full top-[64px] bg-white pt-3 h-[92dvh] min-h-[650px] flex flex-col  order-3 `}
       >
         <ul className="flex flex-wrap flex-col gap-6 order-3 mb-10">
           {renderNavLinks}

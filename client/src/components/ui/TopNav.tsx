@@ -5,7 +5,7 @@ import UnauthenticatedTopNav from "./UnauthenticatedTopNav";
 import AuthenticatedTopNav from "./AuthenticatedTopNav";
 
 function TopNav() {
-  const auth = true;
+  const auth = false;
 
   const renderNavbar = () => {
     if (auth) return <AuthenticatedTopNav />;

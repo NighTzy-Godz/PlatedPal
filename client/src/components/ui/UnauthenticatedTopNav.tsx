@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../icons/Logo";
 import { unauthenticatedLinks } from "../../data/topNavLinks";
 import Button from "../common/Button";
@@ -30,16 +30,18 @@ function UnauthenticatedTopNav() {
     const { id, name, path, active } = link;
     return (
       <li key={id}>
-        <Link
+        <NavLink
           to={path}
-          className={`lg:text-xl text-2xl  ${
-            active
-              ? "text-mainColor hover:text-mainColorDark"
-              : " text-textColor hover:text-dark"
-          }`}
+          className={({ isActive }) =>
+            `lg:text-xl text-2xl  ${
+              isActive
+                ? "text-mainColor hover:text-mainColorDark"
+                : " text-textColor hover:text-dark"
+            }`
+          }
         >
           {name}
-        </Link>
+        </NavLink>
       </li>
     );
   });
