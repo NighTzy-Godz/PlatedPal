@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "./Logo";
-import topNavLinks from "../../data/topNavLinks";
+import Logo from "../icons/Logo";
+import { unauthenticatedLinks } from "../../data/topNavLinks";
 import Button from "../common/Button";
 import { debounce } from "lodash";
+import HamburgerMenu from "../icons/HamburgerMenu";
 
 function UnauthenticatedTopNav() {
   const [isShow, setIsShow] = useState(false);
@@ -25,14 +26,16 @@ function UnauthenticatedTopNav() {
     if (windowX > 992) setIsShow(false);
   }, [windowX]);
 
-  const renderNavLinks = topNavLinks.map((link) => {
+  const renderNavLinks = unauthenticatedLinks.map((link) => {
     const { id, name, path, active } = link;
     return (
       <li key={id}>
         <Link
           to={path}
-          className={`lg:text-xl text-2xl text-textColor ${
-            active ? "text-mainColor" : ""
+          className={`lg:text-xl text-2xl  ${
+            active
+              ? "text-mainColor hover:text-mainColorDark"
+              : " text-textColor hover:text-dark"
           }`}
         >
           {name}
@@ -56,20 +59,7 @@ function UnauthenticatedTopNav() {
             <Button variant="main">Sign Up</Button>
           </div>
           <div className="lg:hidden order-2" onClick={() => setIsShow(!isShow)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-8 w-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
+            <HamburgerMenu className="w-8 h-8" />
           </div>
 
           {isShow && (

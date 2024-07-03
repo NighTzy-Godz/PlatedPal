@@ -1,10 +1,10 @@
-import React from "react";
+import React, { SVGProps } from "react";
 
-interface LogoProps {
+interface LogoProps extends SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-function Logo({ className }: LogoProps) {
+function Logo({ className, ...rest }: LogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +12,7 @@ function Logo({ className }: LogoProps) {
       preserveAspectRatio="xMidYMid meet"
       viewBox="45.65 7 385.35 78"
       className={className}
+      {...rest}
     >
       <g
         transform="translate(0.000000,305.000000) scale(0.100000,-0.100000)"
