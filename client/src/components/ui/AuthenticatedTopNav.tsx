@@ -84,7 +84,6 @@ function AuthenticatedTopNav() {
         <ul className="flex flex-wrap flex-col gap-6 order-3 mb-10">
           {renderNavLinks}
         </ul>
-        <div className="flex flex-col gap-3 order-4 "></div>
       </div>
     </div>
   );

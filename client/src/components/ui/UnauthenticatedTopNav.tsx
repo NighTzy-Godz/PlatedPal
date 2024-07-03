@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../icons/Logo";
 import { unauthenticatedLinks } from "../../data/topNavLinks";
-import Button from "../common/Button";
+import Button, { btnVariants } from "../common/Button";
 import { debounce } from "lodash";
 import HamburgerMenu from "../icons/HamburgerMenu";
 
@@ -27,7 +27,7 @@ function UnauthenticatedTopNav() {
   }, [windowX]);
 
   const renderNavLinks = unauthenticatedLinks.map((link) => {
-    const { id, name, path, active } = link;
+    const { id, name, path } = link;
     return (
       <li key={id}>
         <NavLink
@@ -57,8 +57,24 @@ function UnauthenticatedTopNav() {
           </Link>
           <ul className="lg:flex hidden gap-6 ">{renderNavLinks}</ul>
           <div className="lg:flex hidden gap-3 ">
-            <Button>Login</Button>
-            <Button variant="main">Sign Up</Button>
+            <Link
+              to="/login"
+              className={btnVariants({
+                variant: "default",
+                size: windowX < 992 ? "lg" : "default",
+              })}
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className={btnVariants({
+                variant: "main",
+                size: windowX < 992 ? "lg" : "default",
+              })}
+            >
+              Register
+            </Link>
           </div>
           <div className="lg:hidden order-2" onClick={() => setIsShow(!isShow)}>
             <HamburgerMenu className="w-8 h-8" />
@@ -70,8 +86,24 @@ function UnauthenticatedTopNav() {
                 {renderNavLinks}
               </ul>
               <div className="flex flex-col gap-3 order-4 ">
-                <Button className="px-5!">Login</Button>
-                <Button variant="main">Sign Up</Button>
+                <Link
+                  to="/login"
+                  className={btnVariants({
+                    variant: "default",
+                    size: windowX < 992 ? "lg" : "default",
+                  })}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className={btnVariants({
+                    variant: "main",
+                    size: windowX < 992 ? "lg" : "default",
+                  })}
+                >
+                  Register
+                </Link>
               </div>
             </div>
           )}
@@ -80,5 +112,4 @@ function UnauthenticatedTopNav() {
     </div>
   );
 }
-
 export default UnauthenticatedTopNav;

@@ -8,7 +8,7 @@ const btnVariants = cva(
     variants: {
       variant: {
         main: "bg-mainColor text-white hover:bg-mainColorDark tra",
-        default: "bg-white border hover:border-gray-500 ",
+        default: "bg-white border text-textColor hover:border-gray-500 ",
       },
       size: {
         sm: "px-4 py-2 text-lg rounded-[24px]",
@@ -49,5 +49,7 @@ const Button = ({
     </button>
   );
 };
+
+export { btnVariants };
 
 export default Button;

@@ -8,6 +8,8 @@ import Shopping from "./pages/static/Shopping";
 import MealPlanner from "./pages/static/MealPlanner";
 import Communities from "./pages/static/Communities";
 import Saved from "./pages/static/Saved";
+import Login from "./pages/static/Login";
+import Register from "./pages/static/Register";
 
 function App() {
   const auth = false;
@@ -27,6 +29,9 @@ function App() {
           <Route path="/meal-planner" element={<MealPlanner />} />
           <Route path="/communities" element={<Communities />} />
           <Route path="/saved" element={<Saved />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>
