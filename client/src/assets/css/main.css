@@ -18,6 +18,7 @@ p,
 span,
 li,
 input,
+button,
 a {
   @apply font-gelionReg;
 }

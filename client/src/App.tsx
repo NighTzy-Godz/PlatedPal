@@ -1,11 +1,17 @@
 import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomeLayout from "./layout/HomeLayout";
+import Home from "./pages/static/Home";
 
 function App() {
   return (
-    <>
-      <p>Im the app</p>
-      <h1 className="">Im the Header</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
