@@ -35,7 +35,7 @@ function AuthenticatedTopNav() {
   const renderNavLinks = authenticatedLinks.map((link) => {
     const { id, name, path, icon: Icon } = link;
     return (
-      <li key={id}>
+      <li key={id} onClick={() => dispatch(setCollapseNav(false))}>
         <NavLink
           to={path}
           className={({ isActive }) =>

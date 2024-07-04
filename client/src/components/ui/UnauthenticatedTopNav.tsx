@@ -34,7 +34,7 @@ function UnauthenticatedTopNav() {
   const renderNavLinks = unauthenticatedLinks.map((link) => {
     const { id, name, path } = link;
     return (
-      <li key={id}>
+      <li key={id} onClick={() => dispatch(setCollapseNav(false))}>
         <NavLink
           to={path}
           className={({ isActive }) =>
@@ -45,7 +45,7 @@ function UnauthenticatedTopNav() {
             }`
           }
         >
-          {name}
+          <h4>{name}</h4>
         </NavLink>
       </li>
     );

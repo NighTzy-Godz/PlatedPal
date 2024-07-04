@@ -12,7 +12,7 @@ import Login from "./pages/static/Login";
 import Register from "./pages/static/Register";
 
 function App() {
-  const auth = false;
+  const auth = true;
 
   const renderHomePage = () => {
     if (auth) return <Route index element={<Feed />} />;
