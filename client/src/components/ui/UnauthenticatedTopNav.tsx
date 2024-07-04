@@ -51,6 +51,10 @@ function UnauthenticatedTopNav() {
     );
   });
 
+  const handleNavLinks = () => {
+    dispatch(setCollapseNav(false));
+  };
+
   return (
     <div
       className={`w-full transition-all bg-bgColor lg:py-5 py-4 sticky top-0 shadow-xl z-50`}
@@ -95,6 +99,7 @@ function UnauthenticatedTopNav() {
               </ul>
               <div className="flex flex-col gap-3 order-4 ">
                 <Link
+                  onClick={handleNavLinks}
                   to="/login"
                   className={btnVariants({
                     variant: "default",
@@ -104,6 +109,7 @@ function UnauthenticatedTopNav() {
                   Login
                 </Link>
                 <Link
+                  onClick={handleNavLinks}
                   to="/register"
                   className={btnVariants({
                     variant: "main",

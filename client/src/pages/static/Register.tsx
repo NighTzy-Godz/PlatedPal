@@ -35,9 +35,9 @@ function Register() {
   };
 
   return (
-    <div className="py-10 w-full h-[90dvh] grid place-items-center">
+    <div className=" w-full h-[90dvh] grid place-items-center">
       <div className="container mx-auto">
-        <div className=" 2xl:w-1/3 md:w-2/4 sm:w-3/4 sm:px-0 px-5 mx-auto ">
+        <div className="py-10 2xl:w-1/3 md:w-2/4 sm:w-3/4 sm:px-0 px-5 mx-auto ">
           <div className="text-center mb-10">
             <h1 className="text-mainColor text-3xl mb-2">Register</h1>
             <p className="text-textColor text-lg leading-tight">
