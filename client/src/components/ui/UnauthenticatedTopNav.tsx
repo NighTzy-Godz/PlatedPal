@@ -2,18 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../icons/Logo";
 import { unauthenticatedLinks } from "../../data/topNavLinks";
-import Button, { btnVariants } from "../common/Button";
+import { btnVariants } from "../common/Button";
 import { debounce } from "lodash";
 import HamburgerMenu from "../icons/HamburgerMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { State } from "../../store/store";
+import { setCollapseNav } from "../../store/slices/uiSlice";
 
 function UnauthenticatedTopNav() {
-  const [isShow, setIsShow] = useState(false);
+  const dispatch = useDispatch();
+  const { collapseNav } = useSelector((state: State) => state.ui);
   const [windowX, setWindowX] = useState(window.innerWidth);
+  const smallerScreen = windowX < 992;
 
   useEffect(() => {
     const handleResize = debounce(() => {
       setWindowX(window.innerWidth);
-    }, 10);
+    }, 100);
 
     window.addEventListener("resize", handleResize);
 
@@ -23,7 +28,7 @@ function UnauthenticatedTopNav() {
   }, []);
 
   useEffect(() => {
-    if (windowX > 992) setIsShow(false);
+    if (!smallerScreen) dispatch(setCollapseNav(false));
   }, [windowX]);
 
   const renderNavLinks = unauthenticatedLinks.map((link) => {
@@ -76,11 +81,14 @@ function UnauthenticatedTopNav() {
               Register
             </Link>
           </div>
-          <div className="lg:hidden order-2" onClick={() => setIsShow(!isShow)}>
+          <div
+            className="lg:hidden order-2"
+            onClick={() => dispatch(setCollapseNav(!collapseNav))}
+          >
             <HamburgerMenu className="w-8 h-8" />
           </div>
 
-          {isShow && (
+          {collapseNav && smallerScreen && (
             <div className="z-50 h-[92dvh] min-h-96 flex flex-col justify-center items-center order-3 w-full">
               <ul className="flex flex-wrap flex-col gap-6 order-3 items-center mb-10">
                 {renderNavLinks}
