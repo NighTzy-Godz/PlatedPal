@@ -1,5 +1,10 @@
 import { VariantProps, cva } from "class-variance-authority";
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import { cn } from "../../utils/utils";
 
 const btnVariants = cva(
@@ -37,6 +42,30 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     { className, isLoading, children, variant, size, ...props }: ButtonProps,
     ref
   ) => {
+    const [msg, setMsg] = useState("");
+    const [timer, setTimer] = useState(0);
+    useEffect(() => {
+      let timerId: number;
+      if (isLoading) {
+        if (timer > 1) {
+          setMsg(
+            "Please be patient, it may take some time to complete this action "
+          );
+        } else {
+          setMsg("Loading ...");
+        }
+
+        timerId = setTimeout(() => {
+          setTimer(timer + 1);
+        }, 1000);
+      }
+
+      return () => {
+        clearTimeout(timerId);
+        if (!isLoading) setTimer(0);
+      };
+    }, [timer, isLoading]);
+
     return (
       <button
         ref={ref}
@@ -45,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           btnVariants({ variant, size, className })
         )}`}
       >
-        {children}
+        {isLoading ? msg : children}
       </button>
     );
   }

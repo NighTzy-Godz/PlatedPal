@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../components/forms/Input";
 import FormInputsContainer from "../../layout/FormInputsContainer";
 import InputLabel from "../../components/forms/InputLabel";
@@ -7,20 +7,35 @@ import { RegisterUserData } from "../../interfaces/userInterface";
 import Button from "../../components/common/Button";
 import { toast } from "sonner";
 import InputError from "../../components/forms/InputError";
+import { userApi } from "../../store/apis/userApi";
+import { useNavigate } from "react-router-dom";
+import { renderError } from "../../utils/utils";
 function Register() {
+  const navigate = useNavigate();
+  const [registerUser, result] = userApi.useRegisterUserMutation();
+  const { error, isSuccess, isLoading } = result;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterUserData>();
 
+  useEffect(() => {
+    if (error) {
+      renderError(error);
+    }
+    if (isSuccess) {
+      toast.success("Successfully Created the User");
+      navigate("/login");
+    }
+  }, [isLoading, isSuccess, error]);
+
   const handleRegisterUserSubmit = (data: RegisterUserData) => {
-    toast.success("Created the user");
-    console.log(data);
+    registerUser(data);
   };
 
   return (
-    <div className="w-full h-[90dvh] grid place-items-center">
+    <div className="py-10 w-full h-[90dvh] grid place-items-center">
       <div className="w-1/4 mx-auto ">
         <div className="text-center mb-10">
           <h1 className="text-mainColor text-3xl mb-2">Register</h1>
@@ -125,7 +140,12 @@ function Register() {
           </div>
 
           <div className="">
-            <Button type="submit" variant="darkBlue" className="w-full ">
+            <Button
+              isLoading={isLoading}
+              type="submit"
+              variant="darkBlue"
+              className="w-full "
+            >
               Register
             </Button>
           </div>
