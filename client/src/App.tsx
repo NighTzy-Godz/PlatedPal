@@ -10,9 +10,10 @@ import Communities from "./pages/static/Communities";
 import Saved from "./pages/static/Saved";
 import Login from "./pages/static/Login";
 import Register from "./pages/static/Register";
+import { Toaster } from "sonner";
 
 function App() {
-  const auth = true;
+  const auth = false;
 
   const renderHomePage = () => {
     if (auth) return <Route index element={<Feed />} />;
@@ -20,6 +21,14 @@ function App() {
   };
   return (
     <BrowserRouter>
+      <Toaster
+        duration={2000}
+        richColors
+        position="top-center"
+        toastOptions={{
+          className: "font-gelionReg text-lg",
+        }}
+      />
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           {renderHomePage()}

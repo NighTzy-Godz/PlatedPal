@@ -1,5 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, forwardRef } from "react";
 import { cn } from "../../utils/utils";
 
 const btnVariants = cva(
@@ -7,7 +7,9 @@ const btnVariants = cva(
   {
     variants: {
       variant: {
-        main: "bg-mainColor text-white hover:bg-mainColorDark tra",
+        main: "bg-mainColor text-white hover:bg-mainColorDark ",
+        darkBlue: "bg-textColor text-white hover:bg-textColorDark",
+
         default: "bg-white border text-textColor hover:border-gray-500 ",
       },
       size: {
@@ -30,25 +32,24 @@ interface ButtonProps
   isLoading?: boolean;
 }
 
-const Button = ({
-  className,
-  isLoading,
-  children,
-  variant,
-  size,
-  ...props
-}: ButtonProps) => {
-  return (
-    <button
-      {...props}
-      className={`leading-tight ${className} ${cn(
-        btnVariants({ variant, size, className })
-      )}`}
-    >
-      {children}
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { className, isLoading, children, variant, size, ...props }: ButtonProps,
+    ref
+  ) => {
+    return (
+      <button
+        ref={ref}
+        {...props}
+        className={`leading-tight ${className} ${cn(
+          btnVariants({ variant, size, className })
+        )}`}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export { btnVariants };
 

@@ -20,6 +20,7 @@ export default {
         successDark: "rgb(var(--successDark))",
 
         textColor: "rgb(var(--textColor))",
+        textColorDark: "rgb(var(--textColorDark))",
 
         inputPlaceHolder: "rgb(var(--inputPlaceHolder))",
         dark: "rgb(var(--dark))",

@@ -19,6 +19,7 @@ span,
 li,
 input,
 button,
+label,
 a {
   @apply font-gelionReg;
 }
@@ -43,6 +44,7 @@ h6 {
     --success: 17, 216, 216;
     --successDark: 15, 194, 105;
     --textColor: 35, 55, 72;
+    --textColorDark: 29, 45, 58;
     --inputPlaceholderColor: 207, 207, 207;
     --black: 2, 2, 2;
   }
