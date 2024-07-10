@@ -218,18 +218,6 @@ function AddRecipe() {
               </Button>
             </div>
             {renderIngredients()}
-            {/* <FormInputsContainer>
-              <InputLabel className="mb-1 text-xl  tracking-wide">
-                Title
-              </InputLabel>
-              <Input
-                placeholder="Give your recipe name"
-                {...register("title", {
-                  required: "Recipe Title is a required field",
-                })}
-              />
-              {errors.title && <InputError errMsg={errors.title.message} />}
-            </FormInputsContainer> */}
           </div>
         </form>
       </div>
