@@ -22,6 +22,7 @@ const btnVariants = cva(
         default: "py-2 px-4 py-2 text-xl rounded-[30px]",
         lg: "px-5 py-2 text-2xl rounded-[35px]",
         xl: "px-6 py-3 text-2xl rounded-[40px]",
+        smallPill: "px-3 py-2 text-base rounded-[20px]",
       },
     },
     defaultVariants: {

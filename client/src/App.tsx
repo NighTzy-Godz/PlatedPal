@@ -12,6 +12,7 @@ import Login from "./pages/static/Login";
 import Register from "./pages/static/Register";
 import { Toaster } from "sonner";
 import { useAuth } from "./hooks/AuthContext";
+import AddRecipe from "./pages/recipe/AddRecipe";
 
 function App() {
   const { token } = useAuth();
@@ -39,6 +40,8 @@ function App() {
           <Route path="/meal-planner" element={<MealPlanner />} />
           <Route path="/communities" element={<Communities />} />
           <Route path="/saved" element={<Saved />} />
+
+          <Route path="/addRecipe" element={<AddRecipe />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

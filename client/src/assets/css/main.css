@@ -20,7 +20,7 @@ li,
 input,
 button,
 label,
-a {
+textarea a {
   @apply font-gelionReg;
 }
 
