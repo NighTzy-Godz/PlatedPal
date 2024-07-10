@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ContentCenter from "../../layout/ContentCenter";
 import AuthFormWidth from "../../layout/AuthFormWidth";
 import { useForm } from "react-hook-form";
@@ -8,16 +8,31 @@ import InputLabel from "../../components/forms/InputLabel";
 import Input from "../../components/forms/Input";
 import Button from "../../components/common/Button";
 import InputError from "../../components/forms/InputError";
+import { userApi } from "../../store/apis/userApi";
+import { renderError } from "../../utils/utils";
+import { toast } from "sonner";
 
 function Login() {
+  const [loginUser, { error, isLoading, isSuccess }] =
+    userApi.useLoginUserMutation();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<LoginUserData>();
 
+  useEffect(() => {
+    if (error) {
+      renderError(error);
+    }
+    if (isSuccess) {
+      toast.success("Successfully Logged In. Welcome Back!");
+    }
+  }, [error, isSuccess]);
+
   const handleLoginSubmit = (data: LoginUserData) => {
-    console.log(data);
+    loginUser(data);
   };
 
   return (
@@ -68,7 +83,7 @@ function Login() {
 
             <div className="">
               <Button
-                // isLoading={isLoading}
+                isLoading={isLoading}
                 type="submit"
                 variant="darkBlue"
                 className="w-full "

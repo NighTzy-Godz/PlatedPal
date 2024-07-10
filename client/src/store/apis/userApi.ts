@@ -16,10 +16,24 @@ const userApi = createApi({
           };
         },
       }),
+
+      loginUser: builder.mutation({
+        query: (body) => {
+          return {
+            url: "/loginUser",
+            body,
+            method: "POST",
+          };
+        },
+        async onQueryStarted(args, { dispatch, queryFulfilled }) {
+          try {
+            const { data } = await queryFulfilled;
+            console.log(data);
+          } catch (error) {}
+        },
+      }),
     };
   },
 });
-
-const { useRegisterUserMutation } = userApi;
 
 export { userApi };
