@@ -49,7 +49,6 @@ function Register() {
           </div>
           <form onSubmit={handleSubmit(handleRegisterUserSubmit)}>
             <div className="flex sm:flex-nowrap flex-wrap gap-3 mb-5">
-              {" "}
               <FormInputsContainer>
                 <InputLabel htmlFor="firstName" className="mb-1">
                   First Name
