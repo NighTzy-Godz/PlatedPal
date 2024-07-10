@@ -10,6 +10,8 @@ import InputError from "../../components/forms/InputError";
 import { userApi } from "../../store/apis/userApi";
 import { useNavigate } from "react-router-dom";
 import { renderError } from "../../utils/utils";
+import ContentCenter from "../../layout/ContentCenter";
+import AuthFormWidth from "../../layout/AuthFormWidth";
 function Register() {
   const navigate = useNavigate();
   const [registerUser, result] = userApi.useRegisterUserMutation();
@@ -35,9 +37,9 @@ function Register() {
   };
 
   return (
-    <div className=" w-full h-[90dvh] grid place-items-center">
+    <ContentCenter>
       <div className="container mx-auto">
-        <div className="py-10 2xl:w-1/3 md:w-2/4 sm:w-3/4 sm:px-0 px-5 mx-auto ">
+        <AuthFormWidth>
           <div className="text-center mb-10">
             <h1 className="text-mainColor text-3xl mb-2">Register</h1>
             <p className="text-textColor text-lg leading-tight">
@@ -152,9 +154,9 @@ function Register() {
               </Button>
             </div>
           </form>
-        </div>
+        </AuthFormWidth>
       </div>
-    </div>
+    </ContentCenter>
   );
 }
 
