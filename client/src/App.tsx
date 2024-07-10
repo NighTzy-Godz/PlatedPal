@@ -11,12 +11,13 @@ import Saved from "./pages/static/Saved";
 import Login from "./pages/static/Login";
 import Register from "./pages/static/Register";
 import { Toaster } from "sonner";
+import { useAuth } from "./hooks/AuthContext";
 
 function App() {
-  const auth = false;
+  const { token } = useAuth();
 
   const renderHomePage = () => {
-    if (auth) return <Route index element={<Feed />} />;
+    if (token) return <Route index element={<Feed />} />;
     else return <Route index element={<Home />} />;
   };
   return (

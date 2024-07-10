@@ -1,9 +1,22 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setToken } from "../slices/authSlice";
+import { useAuth } from "../../hooks/AuthContext";
+
+//
+const pause = (duration: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
+  });
+};
 
 const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/user",
+    // fetchFn: async (...args) => {
+    //   await pause(1000);
+    //   return fetch(...args);
+    // },
   }),
   endpoints(builder) {
     return {
@@ -28,7 +41,8 @@ const userApi = createApi({
         async onQueryStarted(args, { dispatch, queryFulfilled }) {
           try {
             const { data } = await queryFulfilled;
-            console.log(data);
+            localStorage.setItem("token", data);
+            dispatch(setToken(data));
           } catch (error) {}
         },
       }),

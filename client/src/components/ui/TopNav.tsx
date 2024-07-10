@@ -1,12 +1,13 @@
 import React from "react";
 import UnauthenticatedTopNav from "./UnauthenticatedTopNav";
 import AuthenticatedTopNav from "./AuthenticatedTopNav";
+import { useAuth } from "../../hooks/AuthContext";
 
 function TopNav() {
-  const auth = false;
+  const { token } = useAuth();
 
   const renderNavbar = () => {
-    if (auth) return <AuthenticatedTopNav />;
+    if (token) return <AuthenticatedTopNav />;
     return <UnauthenticatedTopNav />;
   };
 

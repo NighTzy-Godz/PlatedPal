@@ -10,3 +10,9 @@ export interface LoginUserData {
   email: string;
   password: string;
 }
+
+export interface IDecodedUser {
+  _id: string;
+  fullName: string;
+  pfp: string;
+}

@@ -11,8 +11,10 @@ import InputError from "../../components/forms/InputError";
 import { userApi } from "../../store/apis/userApi";
 import { renderError } from "../../utils/utils";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [loginUser, { error, isLoading, isSuccess }] =
     userApi.useLoginUserMutation();
 
@@ -28,6 +30,7 @@ function Login() {
     }
     if (isSuccess) {
       toast.success("Successfully Logged In. Welcome Back!");
+      navigate("/");
     }
   }, [error, isSuccess]);
 
