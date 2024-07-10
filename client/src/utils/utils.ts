@@ -11,6 +11,9 @@ export function cn(...inputs: ClassValue[]) {
 export function renderError(
   error: FetchBaseQueryError | SerializedError | undefined
 ) {
+  if (error && "status" in error) {
+    toast.error("Unexpected Error Happened");
+  }
   if (error && "originalStatus" in error) {
     if (error.originalStatus >= 500) {
       toast.error("Unexpected Error Happened");
