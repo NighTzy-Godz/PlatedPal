@@ -9,11 +9,16 @@ export interface TimeCount {
   min: number;
 }
 
+export interface Instruction {
+  id: string;
+  instruction: string;
+}
+
 export interface AddRecipeData {
   title: string;
   description: string;
   ingredients: Ingredients[];
-  instructions: string[];
+  instructions: Instruction[];
   servings: number;
   prepTime: TimeCount;
   cookTime: TimeCount;

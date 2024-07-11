@@ -36,6 +36,7 @@ interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof btnVariants> {
   isLoading?: boolean;
+  className?: string;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -69,11 +70,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        ref={ref}
-        {...props}
         className={`leading-tight ${className} ${cn(
           btnVariants({ variant, size, className })
         )}`}
+        ref={ref}
+        {...props}
       >
         {isLoading ? msg : children}
       </button>

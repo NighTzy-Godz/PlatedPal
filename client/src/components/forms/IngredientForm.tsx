@@ -11,8 +11,9 @@ import EditIcon from "../icons/EditIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import AddIngredientModal from "../modals/AddIngredientModal";
 import EditIngredientModal from "../modals/EditIngredientModal";
-import InputLabel from "../forms/InputLabel";
+import InputLabel from "./InputLabel";
 import Button from "../common/Button";
+import { IoMdAdd } from "react-icons/io";
 
 function IngredientForm() {
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ function IngredientForm() {
       />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <InputLabel className="text-xl">Ingredients</InputLabel>
+          <InputLabel className="text-2xl">Ingredients</InputLabel>
           {ingredients.length !== 0 && (
             <p className="h-5 flex justify-center items-center w-5 rounded-full bg-textColor text-white">
               {ingredients.length}
@@ -127,12 +128,13 @@ function IngredientForm() {
         </div>
 
         <Button
+          // className="!text-"
           type="button"
           size="smallPill"
           variant="darkBlue"
           onClick={() => dispatch(setOpenIngredientsModal(true))}
         >
-          +
+          <IoMdAdd />
         </Button>
       </div>
       {renderIngredients()}

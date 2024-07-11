@@ -73,7 +73,7 @@ function EditIngredientModal({
       <div>
         <div className="mb-5">
           <FormInputsContainer>
-            <InputLabel>Ingredient</InputLabel>
+            <InputLabel className="mb-1 text-lg">Ingredient</InputLabel>
             <Input
               placeholder="Name of ingredient used"
               value={ingredient}
@@ -84,7 +84,7 @@ function EditIngredientModal({
         </div>
         <div className="mb-5">
           <FormInputsContainer>
-            <InputLabel>Unit</InputLabel>
+            <InputLabel className="mb-1 text-lg">Unit</InputLabel>
             <Input
               placeholder="What's the unit?"
               value={unit}
