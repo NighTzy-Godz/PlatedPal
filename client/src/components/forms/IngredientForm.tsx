@@ -14,6 +14,7 @@ import EditIngredientModal from "../modals/EditIngredientModal";
 import InputLabel from "./InputLabel";
 import Button from "../common/Button";
 import { IoMdAdd } from "react-icons/io";
+import { setIngredients } from "../../store/slices/recipeSlice";
 
 function IngredientForm() {
   const dispatch = useDispatch();
@@ -24,7 +25,9 @@ function IngredientForm() {
     (state: State) => state.ui.openEditIngredientModal
   );
 
-  const [ingredients, setIngredients] = useState<Ingredients[] | []>([]);
+  const ingredients = useSelector(
+    (state: State) => state.recipeSlice.ingredients
+  );
   const [toEditIngredient, setToEditIngredient] = useState<Ingredients | null>(
     null
   );
@@ -32,7 +35,8 @@ function IngredientForm() {
   const handleAddIngredient = (ingredient: Ingredients) => {
     const preIngredients = [...ingredients];
     preIngredients.push(ingredient);
-    setIngredients(preIngredients);
+    dispatch(setIngredients(preIngredients));
+
     toast.success(`Added the ingredient ${ingredient.ingredient}`);
   };
 
@@ -41,7 +45,8 @@ function IngredientForm() {
     const index = clonedArr.findIndex((item) => item.id === ingredient.id);
     if (index !== -1) {
       clonedArr.splice(index, 1);
-      setIngredients(clonedArr);
+      dispatch(setIngredients(clonedArr));
+
       toast.success(`Successfully deleted ${ingredient.ingredient}`);
     }
   };
@@ -51,8 +56,8 @@ function IngredientForm() {
 
     if (index !== -1) {
       clonedArr[index] = { ...clonedArr[index], ...ingredient };
+      dispatch(setIngredients(clonedArr));
 
-      setIngredients(clonedArr);
       toast.success(`Edited the ingredient ${ingredient.ingredient}`);
     }
   };
@@ -73,15 +78,15 @@ function IngredientForm() {
   const renderIngredients = () => {
     if (ingredients.length === 0)
       return (
-        <p className="mt-2 text-lg text-textColor">
+        <p className=" text-xl text-gray-500">
           Let the world know your secrets! Add some Ingredients!
         </p>
       );
     return ingredients.map((item) => {
       return (
-        <div key={item.id} className="mt-5 flex items-center justify-between">
+        <div key={item.id} className="mt-3 flex items-center justify-between">
           <div className="flex items-center gap-1">
-            <p className="text-textColor text-lg">
+            <p className="text-textColor text-xl">
               {" "}
               <span className="font-semibold">{item.unit} of</span>{" "}
               {item.ingredient}
@@ -128,7 +133,6 @@ function IngredientForm() {
         </div>
 
         <Button
-          // className="!text-"
           type="button"
           size="smallPill"
           variant="darkBlue"

@@ -14,6 +14,7 @@ import EditIcon from "../icons/EditIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import { toast } from "sonner";
 import EditInstructionModal from "../modals/EditInstructionModal";
+import { setInstructions } from "../../store/slices/recipeSlice";
 
 function InstructionForm() {
   const dispatch = useDispatch();
@@ -24,7 +25,9 @@ function InstructionForm() {
     (state: State) => state.ui.openEditInstructionModal
   );
 
-  const [instructions, setInstructions] = useState<Instruction[] | []>([]);
+  const instructions = useSelector(
+    (state: State) => state.recipeSlice.instructions
+  );
   const [toEditInstruction, setToEditInstruction] =
     useState<Instruction | null>(null);
   const handleAddInstructionModalClose = () => {
@@ -38,7 +41,7 @@ function InstructionForm() {
   const handleAddInstruction = (instruction: Instruction) => {
     const instructionsArr = [...instructions];
     instructionsArr.push(instruction);
-    setInstructions(instructionsArr);
+    dispatch(setInstructions(instructionsArr));
     toast.success("Successfully Added the Instruction");
   };
 
@@ -49,7 +52,8 @@ function InstructionForm() {
 
     if (index !== -1) {
       instructionsArr.splice(index, 1);
-      setInstructions(instructionsArr);
+      dispatch(setInstructions(instructionsArr));
+
       toast.success(`Successfully removed the instruction`);
     }
   };
@@ -60,7 +64,7 @@ function InstructionForm() {
 
     if (index !== -1) {
       instructionsArr[index] = { ...instructionsArr[index], ...instruct };
-      setInstructions(instructionsArr);
+      dispatch(setInstructions(instructionsArr));
       toast.success("Successfully Edit the Instruction");
     }
   };
@@ -73,31 +77,33 @@ function InstructionForm() {
   const renderInstructions = () => {
     if (instructions.length === 0) {
       return (
-        <p className="mt-2 text-lg text-textColor">
+        <p className="text-xl text-gray-500">
           Add some steps on how you prepare or cook it
         </p>
       );
     }
     return instructions.map((item, index) => {
       return (
-        <div key={item.id} className="mt-5 flex justify-between gap-2">
-          <div className="">
-            <h3 className="text-textColor font-semibold text-lg">
+        <div key={item.id} className="mt-3  gap-2">
+          <div className="flex justify-between items-center">
+            <h3 className="text-textColor font-semibold text-xl">
               Step {index + 1}:{" "}
             </h3>
-            <p className="text-textColor text-lg">{item.instruction}</p>
+            <div className="flex items-center gap-2">
+              <EditIcon
+                className="w-6 h-6 text-textColor cursor-pointer"
+                onClick={() => handleEditInstructionModalOpen(item)}
+              />
+
+              <DeleteIcon
+                className="w-6 h-6 text-error cursor-pointer"
+                onClick={() => deleteInstruction(item)}
+              />
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <EditIcon
-              className="w-6 h-6 text-textColor cursor-pointer"
-              onClick={() => handleEditInstructionModalOpen(item)}
-            />
-
-            <DeleteIcon
-              className="w-6 h-6 text-error cursor-pointer"
-              onClick={() => deleteInstruction(item)}
-            />
+          <div className="">
+            <p className="text-textColor text-xl">{item.instruction}</p>
           </div>
         </div>
       );

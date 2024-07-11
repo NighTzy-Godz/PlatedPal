@@ -14,6 +14,15 @@ export interface Instruction {
   instruction: string;
 }
 
+export interface PreAddRecipeData {
+  title: string;
+  description: string;
+
+  servings: number;
+  prepTime: TimeCount;
+  cookTime: TimeCount;
+}
+
 export interface AddRecipeData {
   title: string;
   description: string;
