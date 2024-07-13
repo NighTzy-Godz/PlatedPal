@@ -8,6 +8,6 @@ const upload = multer({ storage });
 
 const app = Router();
 
-app.post("/addRecipe", [upload.array("imgs"), isAuth], addRecipe);
+app.post("/addRecipe", upload.array("img"), [isAuth], addRecipe);
 
 export default app;

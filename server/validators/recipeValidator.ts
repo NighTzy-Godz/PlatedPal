@@ -2,10 +2,12 @@ import Joi, { Schema } from "joi";
 import {
   AddRecipeData,
   Ingredients,
+  Instruction,
   TimeCount,
 } from "../interfaces/recipeInterfaces";
 
 const ingredientsSchema = Joi.object<Ingredients>({
+  id: Joi.string(),
   ingredient: Joi.string().trim().required().messages({
     "any.required": "Ingredient is a required field",
     "string.base": "Ingredient should be a type of string",
@@ -18,14 +20,22 @@ const ingredientsSchema = Joi.object<Ingredients>({
   }),
 });
 
+const instructionSchema = Joi.object<Instruction>({
+  id: Joi.string(),
+  instruction: Joi.string().trim().required().messages({
+    "string.base": "Instruction should be a type of string",
+    "string.required": "Instruction is a required field",
+  }),
+});
+
 const timeCountSchema = Joi.object<TimeCount>({
-  hours: Joi.number().integer().strict().min(0).required().messages({
+  hours: Joi.number().integer().min(0).required().messages({
     "any.required": "Hours is a required field",
     "number.base": "Hours should be a type of number",
     "number.integer": "Hours should be an integer",
     "number.min": "Hours cannot be less than 0",
   }),
-  min: Joi.number().integer().strict().min(0).max(59).required().messages({
+  min: Joi.number().integer().min(0).max(59).required().messages({
     "any.required": "Minutes is a required field",
     "number.base": "Minutes should be a type of number",
     "number.integer": "Minutes should be an integer",
@@ -50,12 +60,7 @@ export const addRecipeValidator = (
     }),
 
     instructions: Joi.array()
-      .items(
-        Joi.string().trim().required().messages({
-          "string.base": "Instruction should be a type of string",
-          "string.required": "Instruction is a required field",
-        })
-      )
+      .items(instructionSchema)
       .min(1)
       .required()
       .messages({
@@ -74,7 +79,7 @@ export const addRecipeValidator = (
         "array.min": "At least one ingredient is required",
       }),
 
-    servings: Joi.number().integer().strict().min(1).required().messages({
+    servings: Joi.number().integer().min(1).required().messages({
       "any.required": "Servings is a required field",
       "number.base": "Servings should be a type of number",
       "number.integer": "Servings should be an integer",

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "dev": "concurrently \" npx tsc \" \" nodemon dist/index.js \" ",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/index.js\"",
     "test": "jest --watchAll --verbose --detectOpenHandles"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "@types/multer": "^1.4.11",
     "@types/nodemon": "^1.19.6",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cloudinary": "^1.41.3",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",

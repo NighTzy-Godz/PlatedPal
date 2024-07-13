@@ -1,5 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { Ingredients, TimeCount } from "../interfaces/recipeInterfaces";
+import {
+  Ingredients,
+  Instruction,
+  TimeCount,
+} from "../interfaces/recipeInterfaces";
 
 const DB_URL = process.env.DB_URL as string;
 
@@ -12,10 +16,10 @@ interface IRecipe extends Document {
   creator: Schema.Types.ObjectId;
   title: string;
   description: string;
-  images: string[];
+  image: string;
   saved: number;
   ingredients: Ingredients[];
-  instructions: string[];
+  instructions: Instruction[];
   servings: number;
   prepTime: TimeCount;
   cookTime: TimeCount;
@@ -34,12 +38,11 @@ const recipeSchema: Schema<IRecipe> = new Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  image: {
+    type: String,
+    required: true,
+  },
+
   saved: {
     type: Number,
     default: 0,
@@ -59,8 +62,13 @@ const recipeSchema: Schema<IRecipe> = new Schema({
 
   instructions: [
     {
-      type: String,
-      required: true,
+      id: {
+        type: String,
+      },
+      instruction: {
+        type: String,
+        required: true,
+      },
     },
   ],
   servings: {

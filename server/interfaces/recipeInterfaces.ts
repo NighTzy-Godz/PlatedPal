@@ -1,6 +1,12 @@
 export interface Ingredients {
+  id: string;
   ingredient: string;
   unit: string;
+}
+
+export interface Instruction {
+  id: string;
+  instruction: string;
 }
 
 export interface TimeCount {
