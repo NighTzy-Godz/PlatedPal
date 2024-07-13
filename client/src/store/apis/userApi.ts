@@ -3,7 +3,7 @@ import { setToken } from "../slices/authSlice";
 import { useAuth } from "../../hooks/AuthContext";
 
 //
-const pause = (duration: number) => {
+export const pause = (duration: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });

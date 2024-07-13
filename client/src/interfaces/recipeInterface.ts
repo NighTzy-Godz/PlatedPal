@@ -17,7 +17,7 @@ export interface Instruction {
 export interface PreAddRecipeData {
   title: string;
   description: string;
-
+  img: FileList;
   servings: number;
   prepTime: TimeCount;
   cookTime: TimeCount;

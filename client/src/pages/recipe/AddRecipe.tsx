@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   AddRecipeData,
@@ -18,8 +18,14 @@ import InstructionForm from "../../components/forms/InstructionForm";
 import { useSelector } from "react-redux";
 import { State } from "../../store/store";
 import { toast } from "sonner";
+import FileUploader from "../../components/forms/FileUploader";
+import { recipeApi } from "../../store/apis/recipeApi";
+import { renderError } from "../../utils/utils";
 
 function AddRecipe() {
+  const [addRecipe, { error, isLoading, isSuccess }] =
+    recipeApi.useAddRecipeMutation();
+
   const ingredients = useSelector(
     (state: State) => state.recipeSlice.ingredients
   );
@@ -33,25 +39,41 @@ function AddRecipe() {
     formState: { errors },
   } = useForm<PreAddRecipeData>();
 
+  useEffect(() => {
+    if (error) {
+      renderError(error);
+    }
+    if (isSuccess) {
+      toast.success("Successfully Added the recipe");
+    }
+  }, [error, isSuccess]);
+
   const handleAddRecipeSubmit = (data: PreAddRecipeData) => {
+    const { title, cookTime, prepTime, description, servings, img } = data;
+
     if (ingredients.length === 0)
       return toast.error("Ingredients cannot be empty");
     if (instructions.length === 0) {
       return toast.error("Instructions cannot be empty");
     }
 
-    const reqBody: AddRecipeData = {
-      ...data,
-      instructions,
-      ingredients,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("cookTime", JSON.stringify(cookTime));
+    formData.append("prepTime", JSON.stringify(prepTime));
+    formData.append("description", description);
+    formData.append("servings", servings as any);
 
-    console.log(reqBody);
+    formData.append("img", img[0]);
+    formData.append("ingredients", JSON.stringify(ingredients));
+    formData.append("instructions", JSON.stringify(instructions));
+
+    addRecipe(formData);
   };
 
   return (
     <div className="w-full pt-10">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-xl mx-auto">
         <form
           method="post"
           className="w-full"
@@ -66,7 +88,12 @@ function AddRecipe() {
               <h3 className="text-3xl text-textColor">Add Recipe</h3>
             </div>
             <div className="">
-              <Button variant="main" size="sm" type="submit">
+              <Button
+                isLoading={isLoading}
+                variant="main"
+                size="sm"
+                type="submit"
+              >
                 Save Recipe
               </Button>
             </div>
@@ -89,6 +116,17 @@ function AddRecipe() {
               />
               {errors.title && <InputError errMsg={errors.title.message} />}
             </FormInputsContainer>
+          </div>
+
+          <div className="mb-8">
+            <FileUploader
+              accept="image/*"
+              multiple
+              {...register("img", {
+                required: "File Upload is a required field",
+              })}
+            />
+            {errors.img && <InputError errMsg={errors.img.message} />}
           </div>
 
           <div className="mb-8">
