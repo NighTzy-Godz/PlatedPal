@@ -59,3 +59,28 @@ export const addRecipe = async (
     next(error);
   }
 };
+
+export const getMyMadeRecipe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const currUserId = req.user?._id;
+
+    if (!currUserId)
+      return res.status(401).send("Please login first before proceeding");
+
+    const userMadeRecipes = await Recipe.find({ creator: currUserId });
+    const dataCount = await Recipe.countDocuments({ creator: currUserId });
+
+    const resData = {
+      data: userMadeRecipes,
+      totalCount: dataCount,
+    };
+
+    res.json(resData);
+  } catch (error) {
+    next(error);
+  }
+};
