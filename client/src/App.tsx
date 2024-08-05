@@ -13,6 +13,7 @@ import Register from "./pages/static/Register";
 import { Toaster } from "sonner";
 import { useAuth } from "./hooks/AuthContext";
 import AddRecipe from "./pages/recipe/AddRecipe";
+import RecipeDetails from "./pages/recipe/RecipeDetails";
 
 function App() {
   const { token } = useAuth();
@@ -36,6 +37,7 @@ function App() {
           {renderHomePage()}
 
           <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/meal-planner" element={<MealPlanner />} />
           <Route path="/communities" element={<Communities />} />

@@ -14,7 +14,7 @@ const btnVariants = cva(
       variant: {
         main: "bg-mainColor text-white hover:bg-mainColorDark ",
         darkBlue: "bg-textColor text-white hover:bg-textColorDark",
-
+        danger: "bg-error text-white hover:bg-errorDark",
         default: "bg-white border text-textColor hover:border-gray-500 ",
       },
       size: {
