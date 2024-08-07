@@ -11,9 +11,9 @@ interface FeedPostCardProps {
 }
 
 function FeedPostCard({ data }: FeedPostCardProps) {
-  const { description, creator, image, _id: recipeId } = data;
+  const { description, creator, image, _id: recipeId, title } = data;
   const xtractedCreator = creator as IUser;
-
+  console.log(data);
   return (
     <div className="px-3 py-5 border mb-5 border-slate-300">
       <div className="mb-5 flex gap-3">
@@ -39,11 +39,13 @@ function FeedPostCard({ data }: FeedPostCardProps) {
         <p className="text-textColor text-2xl">{description}</p>
       </div>
 
-      <div className="mb-5">
-        <Link to={`/recipe/${recipeId}`}>
+      <div className="mb-7">
+        <Link to={`/recipes/${recipeId}`} className="mb-2 block">
           {" "}
           <img src={image} alt="" />
         </Link>
+
+        <h2 className="text-2xl text-textColor">{title}</h2>
       </div>
 
       <div className="flex justify-around items-center gap-5">

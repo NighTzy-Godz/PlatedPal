@@ -30,6 +30,14 @@ const recipeApi = createApi({
         },
       }),
 
+      getRecipeDetails: builder.query({
+        query: (recipeId) => {
+          return {
+            url: `/recipeDetails/${recipeId}`,
+          };
+        },
+      }),
+
       addRecipe: builder.mutation({
         query: (body) => {
           return {

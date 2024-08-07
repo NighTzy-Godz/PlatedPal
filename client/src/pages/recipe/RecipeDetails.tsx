@@ -1,18 +1,40 @@
 import React from "react";
 import IMG from "../../assets/imgs/test_img2.jpg";
 import Button from "../../components/common/Button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaCommentAlt } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
+import { recipeApi } from "../../store/apis/recipeApi";
+import { IRecipe } from "../../interfaces/recipeInterface";
+import { IUser } from "../../interfaces/userInterface";
 
 function RecipeDetails() {
+  const { recipeId } = useParams();
+
+  const { data } = recipeApi.useGetRecipeDetailsQuery(recipeId);
+  const recipe = data as IRecipe;
+
+  const {
+    title,
+    image,
+    creator,
+    saved,
+    likes,
+    prepTime,
+    cookTime,
+    instructions,
+    ingredients,
+    description,
+  } = recipe || {};
+  const xCreator = creator as IUser;
+
   return (
     <div className="py-10">
       <div className="container mx-auto">
         <div className="flex gap-10 mb-10">
           <div className="w-1/2">
             <img
-              src={IMG}
+              src={image}
               alt=""
               className="h-[550px] object-cover w-full rounded-2xl"
             />
@@ -26,17 +48,15 @@ function RecipeDetails() {
             <div className="mb-5 flex gap-3 items-center ">
               <img
                 className="w-9 h-9 object-cover rounded-full "
-                src="https://res.cloudinary.com/doggodoggo228/image/upload/v1719548694/account_iu1nvc.png"
-                alt=""
+                src={xCreator?.pfp}
+                alt="Creator PFP"
               />
-              <Link className="text-textColor font-semibold text-sm" to="#">
-                Aser James Hubreo
+              <Link className="text-textColor font-semibold " to="#">
+                {xCreator?.firstName} {xCreator?.lastName}
               </Link>
             </div>
             <div className="mb-5">
-              <h3 className="text-textColor text-5xl">
-                BUTTER CHICKEN {"(VEGAN)"}
-              </h3>
+              <h3 className="text-textColor text-5xl">{title}</h3>
             </div>
             <div className="flex gap-10 mb-5">
               <div className=" flex gap-2 items-center">
@@ -45,13 +65,17 @@ function RecipeDetails() {
               </div>{" "}
               <div className=" flex gap-2 items-center">
                 <FaBookmark className="w-5 h-5 text-mainColor" />
-                <p className="text-textColorDark text-lg font-semibold">331</p>
+                <p className="text-textColorDark text-lg font-semibold">
+                  {saved}
+                </p>
               </div>
             </div>
             <div className="mb-5">
               <h3 className="mb-3 text-2xl text-textColor">
                 Instructions:{" "}
-                <span className="font-medium text-xl">14 Steps</span>
+                <span className="font-medium text-xl">
+                  {instructions?.length} Steps
+                </span>
               </h3>
               <h3 className="mb-3 text-2xl text-textColor">
                 Cook Time:{" "}
@@ -63,16 +87,7 @@ function RecipeDetails() {
             </div>
 
             <div className="h-32   overflow-y-scroll">
-              <p className="text-textColor">
-                Experience the delightful tanginess of our Pork Sinigang sa
-                Sampalok recipe! This classic Filipino dish features tender pork
-                chunks simmered in a savory broth infused with the sour goodness
-                of tamarind. With the addition of creamy taro root, every
-                spoonful offers comfort and satisfaction, perfect for warming
-                your soul on any occasion. With the addition of creamy taro
-                root, every spoonful offers comfort and satisfaction, perfect
-                for warming your soul on any occasion.
-              </p>
+              <p className="text-textColor">{description}</p>
             </div>
           </div>
         </div>
@@ -81,7 +96,7 @@ function RecipeDetails() {
           <div className="w-1/2 ">
             <div className="flex items-center justify-between mb-8">
               <h1 className="text-2xl text-textColor">Ingredients</h1>
-              <p className="text-xl text-textColor">10</p>
+              <p className="text-xl text-textColor">{ingredients?.length}</p>
             </div>
             <p className="text-textColor text-xl mb-3">
               <span className="font-semibold">3 Kilos</span> of Tomato
@@ -111,7 +126,7 @@ function RecipeDetails() {
           <div className="w-1/2 ">
             <div className="flex items-center justify-between mb-8">
               <h1 className="text-2xl text-textColor">Instructions </h1>
-              <p className="text-xl text-textColor">14</p>
+              <p className="text-xl text-textColor">{instructions?.length}</p>
             </div>
             <div className="mb-5">
               <p className="text-textColor font-semibold text-xl">Step 1</p>
