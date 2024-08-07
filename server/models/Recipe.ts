@@ -17,6 +17,7 @@ interface IRecipe extends Document {
   title: string;
   description: string;
   image: string;
+  likes: number;
   saved: number;
   ingredients: Ingredients[];
   instructions: Instruction[];
@@ -47,6 +48,12 @@ const recipeSchema: Schema<IRecipe> = new Schema({
     type: Number,
     default: 0,
   },
+
+  likes: {
+    type: Number,
+    default: 0,
+  },
+
   ingredients: [
     {
       ingredient: {

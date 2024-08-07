@@ -41,14 +41,15 @@ export const addRecipe = async (
     const imgLinks = files.map((file) => file.path);
 
     const recipe = new Recipe({
-      title,
-      description,
-      ingredients,
-      instructions,
+      title: parsedBody.title,
+      description: parsedBody.description,
+      ingredients: parsedBody.ingredients,
+      instructions: parsedBody.instructions,
       image: imgLinks[0],
-      servings,
-      prepTime,
-      cookTime,
+      servings: parsedBody.servings,
+      prepTime: parsedBody.prepTime,
+      cookTime: parsedBody.cookTime,
+      creator: currUserId,
     });
 
     await recipe.save();
@@ -80,6 +81,35 @@ export const getMyMadeRecipe = async (
     };
 
     res.json(resData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllRecipes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { page, limit } = req.query;
+
+    const qPage = parseInt(page as string) || 1;
+    const qLimit = parseInt(limit as string) || 10;
+    const skip = (qPage - 1) * qLimit;
+
+    const recipes = await Recipe.find()
+      .skip(skip)
+      .limit(qLimit)
+      .populate("creator");
+    const totalRecipes = await Recipe.find().countDocuments();
+
+    const resBody = {
+      data: recipes,
+      totalCount: totalRecipes,
+    };
+
+    res.json(resBody);
   } catch (error) {
     next(error);
   }
