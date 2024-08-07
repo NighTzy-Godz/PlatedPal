@@ -16,3 +16,18 @@ export interface IDecodedUser {
   fullName: string;
   pfp: string;
 }
+
+export interface IUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  pfp: string;
+  username: string;
+  password: string;
+  bio: string;
+  email: string;
+
+  followers?: number;
+  following?: number;
+  posts?: string[];
+}

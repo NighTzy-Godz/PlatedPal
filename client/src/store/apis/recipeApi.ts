@@ -19,10 +19,19 @@ const recipeApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["FeedRecipe"],
   endpoints(builder) {
     return {
+      getAllRecipes: builder.query({
+        query: () => {
+          return {
+            url: "/getAllRecipes",
+          };
+        },
+      }),
+
       addRecipe: builder.mutation({
-        query(body) {
+        query: (body) => {
           return {
             url: "/addRecipe",
             body,
