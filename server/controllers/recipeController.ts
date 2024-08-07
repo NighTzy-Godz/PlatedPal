@@ -61,6 +61,28 @@ export const addRecipe = async (
   }
 };
 
+export const getRecipeDetails = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { recipeId } = req.params;
+
+    const currUserId = req.user?._id;
+    if (!currUserId)
+      return res.status(401).send("You are not authorized. Please Login First");
+
+    const recipe = await Recipe.findById({ _id: recipeId }).populate("creator");
+
+    if (!recipe) return res.status(404).send("Recipe did not found");
+
+    res.json(recipe);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getMyMadeRecipe = async (
   req: Request,
   res: Response,
