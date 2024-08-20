@@ -2,6 +2,26 @@ import { NextFunction, Request, Response } from "express";
 import { addRecipeValidator } from "../validators/recipeValidator";
 import Recipe from "../models/Recipe";
 
+export const deleteRecipe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { recipeId } = req.params;
+
+    const currUserId = req.user?._id;
+    if (!currUserId) return res.status(401).send("Please authenticate first");
+
+    const recipe = await Recipe.findByIdAndDelete(recipeId);
+    if (!recipe) return res.status(404).send("Recipe did not found");
+
+    res.status(200).json("Ok");
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addRecipe = async (
   req: Request,
   res: Response,
