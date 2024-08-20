@@ -20,11 +20,11 @@ const recipeApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["FeedRecipe", "Single Recipe"],
+  tagTypes: ["Single Recipe"],
   endpoints(builder) {
     return {
       getAllRecipes: builder.query({
-        providesTags: ["FeedRecipe", "Single Recipe"],
+        providesTags: ["Single Recipe"],
         query: () => {
           return {
             url: "/getAllRecipes",
@@ -42,12 +42,22 @@ const recipeApi = createApi({
       }),
 
       addRecipe: builder.mutation({
-        invalidatesTags: ["FeedRecipe"],
+        invalidatesTags: ["Single Recipe"],
         query: (body) => {
           return {
             url: "/addRecipe",
             body,
             method: "POST",
+          };
+        },
+      }),
+
+      deleteRecipe: builder.mutation({
+        invalidatesTags: ["Single Recipe"],
+        query: (recipeId) => {
+          return {
+            url: `/deleteRecipe/${recipeId}`,
+            method: "DELETE",
           };
         },
       }),

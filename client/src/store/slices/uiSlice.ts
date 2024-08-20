@@ -8,6 +8,8 @@ export interface UIState {
 
   openAddInstructionModal: boolean;
   openEditInstructionModal: boolean;
+
+  openDeleteRecipeModal: boolean;
 }
 
 const initialState: UIState = {
@@ -18,6 +20,8 @@ const initialState: UIState = {
 
   openAddInstructionModal: false,
   openEditInstructionModal: false,
+
+  openDeleteRecipeModal: false,
 };
 
 const slice = createSlice({
@@ -44,6 +48,10 @@ const slice = createSlice({
     setOpenEditInstructionModal: (ui, action) => {
       ui.openEditInstructionModal = action.payload;
     },
+
+    setOpenDeleteRecipeModal: (ui, action) => {
+      ui.openDeleteRecipeModal = action.payload;
+    },
   },
 });
 
@@ -53,6 +61,7 @@ export const {
   setOpenEditIngredientsModal,
   setOpenAddInsrtuctionModal,
   setOpenEditInstructionModal,
+  setOpenDeleteRecipeModal,
 } = slice.actions;
 
 export default slice.reducer;

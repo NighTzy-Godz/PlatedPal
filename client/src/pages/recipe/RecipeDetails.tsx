@@ -7,18 +7,23 @@ import { FaBookmark } from "react-icons/fa";
 import { recipeApi } from "../../store/apis/recipeApi";
 import { IRecipe } from "../../interfaces/recipeInterface";
 import { IUser } from "../../interfaces/userInterface";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../store/store";
 import { BiSolidLike } from "react-icons/bi";
+import { setOpenDeleteRecipeModal } from "../../store/slices/uiSlice";
+import DeleteRecipeModal from "../../components/modals/DeleteRecipeModal";
 function RecipeDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const dispatch = useDispatch();
   const { recipeId } = useParams();
   const { data } = recipeApi.useGetRecipeDetailsQuery(recipeId);
   const recipe = data as IRecipe;
 
+  const deleteRecipeModal = useSelector(
+    (state: State) => state.ui.openDeleteRecipeModal
+  );
   const currUserId = useSelector((state: State) => state.auth.decodedUser?._id);
 
   const {
@@ -46,7 +51,12 @@ function RecipeDetails() {
             Edit Recipe
           </Link>
 
-          <Button variant="danger">Delete Recipe</Button>
+          <Button
+            variant="danger"
+            onClick={() => dispatch(setOpenDeleteRecipeModal(true))}
+          >
+            Delete Recipe
+          </Button>
         </React.Fragment>
       );
     }
@@ -72,6 +82,11 @@ function RecipeDetails() {
 
   return (
     <div className="py-10">
+      <DeleteRecipeModal
+        recipeId={recipeId as string}
+        isShow={deleteRecipeModal}
+        onModalClose={() => dispatch(setOpenDeleteRecipeModal(false))}
+      />
       <div className="container mx-auto">
         <div className="flex gap-10 mb-10">
           <div className="w-1/2">
