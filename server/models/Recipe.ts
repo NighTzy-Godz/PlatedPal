@@ -27,88 +27,96 @@ interface IRecipe extends Document {
   cookTime: TimeCount;
 }
 
-const recipeSchema: Schema<IRecipe> = new Schema({
-  creator: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
+const recipeSchema: Schema<IRecipe> = new Schema(
+  {
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
 
-  saved: {
-    type: Number,
-    default: 0,
-  },
+    saved: {
+      type: Number,
+      default: 0,
+    },
 
-  comments: {
-    type: Number,
-    default: 0,
-  },
+    comments: {
+      type: Number,
+      default: 0,
+    },
 
-  likes: {
-    type: Number,
-    default: 0,
-  },
+    likes: {
+      type: Number,
+      default: 0,
+    },
 
-  ingredients: [
-    {
-      ingredient: {
-        type: String,
+    ingredients: [
+      {
+        id: {
+          type: String,
+        },
+        ingredient: {
+          type: String,
+          required: true,
+        },
+        unit: {
+          type: String,
+          default: "",
+        },
+        _id: false,
+      },
+    ],
+
+    instructions: [
+      {
+        id: {
+          type: String,
+        },
+        instruction: {
+          type: String,
+          required: true,
+        },
+        _id: false,
+      },
+    ],
+    servings: {
+      type: Number,
+      required: true,
+    },
+    prepTime: {
+      hours: {
+        type: Number,
         required: true,
       },
-      unit: {
-        type: String,
-        default: "",
-      },
-    },
-  ],
-
-  instructions: [
-    {
-      id: {
-        type: String,
-      },
-      instruction: {
-        type: String,
+      min: {
+        type: Number,
         required: true,
       },
     },
-  ],
-  servings: {
-    type: Number,
-    required: true,
-  },
-  prepTime: {
-    hours: {
-      type: Number,
-      required: true,
-    },
-    min: {
-      type: Number,
-      required: true,
+    cookTime: {
+      hours: {
+        type: Number,
+        required: true,
+      },
+      min: {
+        type: Number,
+        required: true,
+      },
     },
   },
-  cookTime: {
-    hours: {
-      type: Number,
-      required: true,
-    },
-    min: {
-      type: Number,
-      required: true,
-    },
-  },
-});
+  { timestamps: true }
+);
 
 const Recipe = mongoose.model<IRecipe>("Recipe", recipeSchema);
 
