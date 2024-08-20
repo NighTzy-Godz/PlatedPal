@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { State } from "../store";
 import { pause } from "./userApi";
+import EditRecipe from "../../pages/recipe/EditRecipe";
 
 const recipeApi = createApi({
   reducerPath: "recipe",
@@ -19,10 +20,11 @@ const recipeApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["FeedRecipe"],
+  tagTypes: ["FeedRecipe", "Single Recipe"],
   endpoints(builder) {
     return {
       getAllRecipes: builder.query({
+        providesTags: ["FeedRecipe", "Single Recipe"],
         query: () => {
           return {
             url: "/getAllRecipes",
@@ -31,6 +33,7 @@ const recipeApi = createApi({
       }),
 
       getRecipeDetails: builder.query({
+        providesTags: ["Single Recipe"],
         query: (recipeId) => {
           return {
             url: `/recipeDetails/${recipeId}`,
@@ -39,11 +42,23 @@ const recipeApi = createApi({
       }),
 
       addRecipe: builder.mutation({
+        invalidatesTags: ["FeedRecipe"],
         query: (body) => {
           return {
             url: "/addRecipe",
             body,
             method: "POST",
+          };
+        },
+      }),
+
+      editRecipe: builder.mutation({
+        invalidatesTags: ["Single Recipe"],
+        query: ({ body, recipeId }) => {
+          return {
+            method: "PUT",
+            url: `/editRecipe/${recipeId}`,
+            body,
           };
         },
       }),

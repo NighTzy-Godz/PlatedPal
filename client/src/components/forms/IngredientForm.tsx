@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../store/store";
 import { Ingredients } from "../../interfaces/recipeInterface";
@@ -16,7 +16,11 @@ import Button from "../common/Button";
 import { IoMdAdd } from "react-icons/io";
 import { setIngredients } from "../../store/slices/recipeSlice";
 
-function IngredientForm() {
+interface IngredientFormProps {
+  data?: Ingredients[];
+}
+
+function IngredientForm({ data }: IngredientFormProps) {
   const dispatch = useDispatch();
   const openIngredientModal = useSelector(
     (state: State) => state.ui.openIngredientsModal
@@ -31,6 +35,12 @@ function IngredientForm() {
   const [toEditIngredient, setToEditIngredient] = useState<Ingredients | null>(
     null
   );
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setIngredients(data));
+    }
+  }, [data]);
 
   const handleAddIngredient = (ingredient: Ingredients) => {
     const preIngredients = [...ingredients];

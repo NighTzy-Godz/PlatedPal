@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputLabel from "./InputLabel";
 import Button from "../common/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -16,7 +16,11 @@ import { toast } from "sonner";
 import EditInstructionModal from "../modals/EditInstructionModal";
 import { setInstructions } from "../../store/slices/recipeSlice";
 
-function InstructionForm() {
+interface InstructionFormProps {
+  data?: Instruction[];
+}
+
+function InstructionForm({ data }: InstructionFormProps) {
   const dispatch = useDispatch();
   const openAddInstructionModal = useSelector(
     (state: State) => state.ui.openAddInstructionModal
@@ -30,6 +34,13 @@ function InstructionForm() {
   );
   const [toEditInstruction, setToEditInstruction] =
     useState<Instruction | null>(null);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setInstructions(data));
+    }
+  }, [data]);
+
   const handleAddInstructionModalClose = () => {
     dispatch(setOpenAddInsrtuctionModal(false));
   };

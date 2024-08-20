@@ -13,7 +13,7 @@ interface FeedPostCardProps {
 function FeedPostCard({ data }: FeedPostCardProps) {
   const { description, creator, image, _id: recipeId, title } = data;
   const xtractedCreator = creator as IUser;
-  console.log(data);
+
   return (
     <div className="px-3 py-5 border mb-5 border-slate-300">
       <div className="mb-5 flex gap-3">

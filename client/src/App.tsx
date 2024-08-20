@@ -14,6 +14,7 @@ import { Toaster } from "sonner";
 import { useAuth } from "./hooks/AuthContext";
 import AddRecipe from "./pages/recipe/AddRecipe";
 import RecipeDetails from "./pages/recipe/RecipeDetails";
+import EditRecipe from "./pages/recipe/EditRecipe";
 
 function App() {
   const { token } = useAuth();
@@ -38,6 +39,10 @@ function App() {
 
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
+          <Route
+            path="/recipes/editRecipe/:recipeId"
+            element={<EditRecipe />}
+          />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/meal-planner" element={<MealPlanner />} />
           <Route path="/communities" element={<Communities />} />

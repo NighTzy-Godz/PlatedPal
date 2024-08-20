@@ -23,6 +23,7 @@ function AddIngredientModal({
 }: AddIngredientModalProps) {
   if (!isShow) return;
 
+  const randomId = uuid();
   const dispatch = useDispatch();
 
   const [ingredient, setIngredient] = useState("");
@@ -44,7 +45,7 @@ function AddIngredientModal({
       return;
     }
 
-    const newData: Ingredients = { id: uuid(), ingredient, unit };
+    const newData: Ingredients = { id: randomId, ingredient, unit };
     onAddIngredient(newData);
     dispatch(setOpenIngredientsModal(false));
     setIngredient("");

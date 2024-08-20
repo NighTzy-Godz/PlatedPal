@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import IMG from "../../assets/imgs/test_img2.jpg";
-import Button from "../../components/common/Button";
+import Button, { btnVariants } from "../../components/common/Button";
 import { Link, useParams } from "react-router-dom";
 import { FaCommentAlt } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { recipeApi } from "../../store/apis/recipeApi";
 import { IRecipe } from "../../interfaces/recipeInterface";
 import { IUser } from "../../interfaces/userInterface";
-
+import { useSelector } from "react-redux";
+import { State } from "../../store/store";
+import { BiSolidLike } from "react-icons/bi";
 function RecipeDetails() {
-  const { recipeId } = useParams();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const { recipeId } = useParams();
   const { data } = recipeApi.useGetRecipeDetailsQuery(recipeId);
   const recipe = data as IRecipe;
+
+  const currUserId = useSelector((state: State) => state.auth.decodedUser?._id);
 
   const {
     title,
@@ -28,6 +35,41 @@ function RecipeDetails() {
   } = recipe || {};
   const xCreator = creator as IUser;
 
+  const renderButtons = () => {
+    if (currUserId === xCreator?._id) {
+      return (
+        <React.Fragment>
+          <Link
+            to={`/recipes/editRecipe/${recipeId}`}
+            className={btnVariants({ variant: "darkBlue" })}
+          >
+            Edit Recipe
+          </Link>
+
+          <Button variant="danger">Delete Recipe</Button>
+        </React.Fragment>
+      );
+    }
+    return <Button variant="main">Save Recipe</Button>;
+  };
+
+  const renderIngredients = ingredients?.map((item) => {
+    return (
+      <p className="text-textColor text-xl mb-3" key={item.id}>
+        <span className="font-semibold">{item.unit}</span> of {item.ingredient}
+      </p>
+    );
+  });
+
+  const renderInstructions = instructions?.map((item, index) => {
+    return (
+      <div className="mb-5" key={item.id}>
+        <p className="text-textColor font-semibold text-xl">Step {index + 1}</p>
+        <p className="text-textColor text-lg">{item.instruction}</p>
+      </div>
+    );
+  });
+
   return (
     <div className="py-10">
       <div className="container mx-auto">
@@ -40,11 +82,7 @@ function RecipeDetails() {
             />
           </div>
           <div className="w-1/2 flex flex-col justify-center">
-            <div className="mb-5 flex gap-3">
-              <Button variant="main">Save Recipe</Button>
-              <Button variant="darkBlue">Edit Recipe</Button>
-              <Button variant="danger">Delete Recipe</Button>
-            </div>
+            <div className="mb-5 flex gap-3">{renderButtons()}</div>
             <div className="mb-5 flex gap-3 items-center ">
               <img
                 className="w-9 h-9 object-cover rounded-full "
@@ -69,6 +107,12 @@ function RecipeDetails() {
                   {saved}
                 </p>
               </div>
+              <div className=" flex gap-2 items-center">
+                <BiSolidLike className="w-6 h-6 text-mainColor " />
+                <p className="text-textColorDark text-lg font-semibold">
+                  {likes}
+                </p>
+              </div>
             </div>
             <div className="mb-5">
               <h3 className="mb-3 text-2xl text-textColor">
@@ -79,10 +123,16 @@ function RecipeDetails() {
               </h3>
               <h3 className="mb-3 text-2xl text-textColor">
                 Cook Time:{" "}
-                <span className="font-medium text-xl">2H 14 Mins</span>
+                <span className="font-medium text-xl">
+                  {cookTime?.hours}H {cookTime?.min} Mins
+                </span>
               </h3>
               <h3 className="mb-3 text-2xl text-textColor">
-                Prep Time: <span className="font-medium text-xl">13 Mins</span>
+                Prep Time:{" "}
+                <span className="font-medium text-xl">
+                  {" "}
+                  {prepTime?.hours}H {prepTime?.min} Mins
+                </span>
               </h3>
             </div>
 
@@ -98,48 +148,15 @@ function RecipeDetails() {
               <h1 className="text-2xl text-textColor">Ingredients</h1>
               <p className="text-xl text-textColor">{ingredients?.length}</p>
             </div>
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>{" "}
-            <p className="text-textColor text-xl mb-3">
-              <span className="font-semibold">3 Kilos</span> of Tomato
-            </p>
+
+            {renderIngredients}
           </div>
           <div className="w-1/2 ">
             <div className="flex items-center justify-between mb-8">
               <h1 className="text-2xl text-textColor">Instructions </h1>
               <p className="text-xl text-textColor">{instructions?.length}</p>
             </div>
-            <div className="mb-5">
-              <p className="text-textColor font-semibold text-xl">Step 1</p>
-              <p className="text-textColor text-lg">Add another pastry</p>
-            </div>
-            <div className="mb-5">
-              <p className="text-textColor font-semibold text-xl">Step 2</p>
-              <p className="text-textColor text-lg">Add another pastry</p>
-            </div>{" "}
-            <div className="mb-5">
-              <p className="text-textColor font-semibold text-xl">Step 3</p>
-              <p className="text-textColor text-lg">Add another pastry</p>
-            </div>
+            {renderInstructions}
           </div>
         </div>
 

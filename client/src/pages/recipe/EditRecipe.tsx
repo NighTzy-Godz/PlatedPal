@@ -1,31 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
 import {
-  AddRecipeData,
+  Ingredients,
+  Instruction,
+  IRecipe,
   PreAddRecipeData,
 } from "../../interfaces/recipeInterface";
-
-import BackIcon from "../../components/icons/BackIcon";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
-import FormInputsContainer from "../../layout/FormInputsContainer";
-import InputLabel from "../../components/forms/InputLabel";
-import Input from "../../components/forms/Input";
-import InputError from "../../components/forms/InputError";
-import TextArea from "../../components/forms/TextArea";
-import IngredientForm from "../../components/forms/IngredientForm";
-import InstructionForm from "../../components/forms/InstructionForm";
 import { useSelector } from "react-redux";
 import { State } from "../../store/store";
 import { toast } from "sonner";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import BackIcon from "../../components/icons/BackIcon";
+import Button from "../../components/common/Button";
+import FormInputsContainer from "../../layout/FormInputsContainer";
+import InputLabel from "../../components/forms/InputLabel";
+
+import InputError from "../../components/forms/InputError";
+import Input from "../../components/forms/Input";
 import FileUploader from "../../components/forms/FileUploader";
+import { useForm } from "react-hook-form";
+import TextArea from "../../components/forms/TextArea";
+import IngredientForm from "../../components/forms/IngredientForm";
+import InstructionForm from "../../components/forms/InstructionForm";
 import { recipeApi } from "../../store/apis/recipeApi";
 import { renderError } from "../../utils/utils";
 
-function AddRecipe() {
+function EditRecipe() {
   const navigate = useNavigate();
-  const [addRecipe, { error, isLoading, isSuccess }] =
-    recipeApi.useAddRecipeMutation();
+  const { recipeId } = useParams();
+  const { data } = recipeApi.useGetRecipeDetailsQuery(recipeId);
+  const [editRecipe, { isLoading, isSuccess, error }] =
+    recipeApi.useEditRecipeMutation();
+
+  const values: PreAddRecipeData = {
+    title: data?.title,
+    description: data?.description,
+    servings: data?.servings,
+    prepTime: data?.prepTime,
+    img: data?.image,
+    cookTime: data?.cookTime,
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PreAddRecipeData>({ values });
 
   const ingredients = useSelector(
     (state: State) => state.recipeSlice.ingredients
@@ -34,24 +53,24 @@ function AddRecipe() {
     (state: State) => state.recipeSlice.instructions
   );
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PreAddRecipeData>();
-
   useEffect(() => {
     if (error) {
       renderError(error);
     }
     if (isSuccess) {
       toast.success("Successfully Added the recipe");
-      navigate("/");
+      navigate(`/recipes/${recipeId}`);
     }
-  }, [error, isSuccess]);
+  }, [error, isLoading, isSuccess]);
 
   const handleAddRecipeSubmit = (data: PreAddRecipeData) => {
     const { title, cookTime, prepTime, description, servings, img } = data;
+    const newIngredients = ingredients.map((item) => {
+      return console.log(item);
+    });
+    // const newInstructions
+
+    console.log(newIngredients);
 
     if (ingredients.length === 0)
       return toast.error("Ingredients cannot be empty");
@@ -70,7 +89,12 @@ function AddRecipe() {
     formData.append("ingredients", JSON.stringify(ingredients));
     formData.append("instructions", JSON.stringify(instructions));
 
-    addRecipe(formData);
+    const body = {
+      body: formData,
+      recipeId,
+    };
+
+    editRecipe(body);
   };
 
   return (
@@ -87,7 +111,7 @@ function AddRecipe() {
                 <BackIcon className="w-6 h-8 " />
               </Link>
 
-              <h3 className="text-3xl text-textColor">Add Recipe</h3>
+              <h3 className="text-3xl text-textColor">Edit Recipe</h3>
             </div>
             <div className="">
               <Button
@@ -96,7 +120,7 @@ function AddRecipe() {
                 size="sm"
                 type="submit"
               >
-                Save Recipe
+                Finish Editing
               </Button>
             </div>
           </div>
@@ -158,11 +182,11 @@ function AddRecipe() {
           </div>
 
           <div className="mb-10">
-            <IngredientForm />
+            <IngredientForm data={data?.ingredients as Ingredients[]} />
           </div>
 
           <div className="mb-8">
-            <InstructionForm />
+            <InstructionForm data={data?.instructions as Instruction[]} />
           </div>
 
           <div className="mb-8">
@@ -267,4 +291,4 @@ function AddRecipe() {
   );
 }
 
-export default AddRecipe;
+export default EditRecipe;
