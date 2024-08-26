@@ -14,6 +14,7 @@ mongoose
 
 interface IRecipe extends Document {
   creator: Schema.Types.ObjectId;
+  community: Schema.Types.ObjectId;
   title: string;
   description: string;
   image: string;
@@ -113,6 +114,11 @@ const recipeSchema: Schema<IRecipe> = new Schema(
         type: Number,
         required: true,
       },
+    },
+
+    community: {
+      type: Schema.Types.ObjectId,
+      ref: "Community",
     },
   },
   { timestamps: true }
