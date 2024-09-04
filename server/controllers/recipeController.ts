@@ -207,7 +207,7 @@ export const getAllRecipes = async (
       .skip(skip)
       .limit(qLimit)
       .populate("creator")
-      .sort({ createdAt: 1 });
+      .sort({ createdAt: -1 });
     const totalRecipes = await Recipe.find().countDocuments();
 
     const resBody = {

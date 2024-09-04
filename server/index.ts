@@ -8,12 +8,14 @@ const PORT = 8080;
 
 import userRoute from "./router/userRoute";
 import recipeRoute from "./router/recipeRoute";
+import communityRoute from "./router/communityRoute";
 
 app.use(urlencoded({ extended: true }));
 app.use(json());
 app.use(cors());
 
 app.use("/api/user", userRoute);
+app.use("/api/community", communityRoute);
 app.use("/api/recipe", recipeRoute);
 
 const server = app.listen(PORT, () => console.log(`Connected to PORT ${PORT}`));
