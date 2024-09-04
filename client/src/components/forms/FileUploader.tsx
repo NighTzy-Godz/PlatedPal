@@ -5,8 +5,6 @@ import React, {
   useState,
 } from "react";
 import { IoImageOutline } from "react-icons/io5";
-import DeleteIcon from "../icons/DeleteIcon";
-import Button from "../common/Button";
 
 interface FileUploaderProps extends InputHTMLAttributes<HTMLInputElement> {}
 

@@ -15,6 +15,8 @@ import { useAuth } from "./hooks/AuthContext";
 import AddRecipe from "./pages/recipe/AddRecipe";
 import RecipeDetails from "./pages/recipe/RecipeDetails";
 import EditRecipe from "./pages/recipe/EditRecipe";
+import CreateCommunity from "./pages/communities/CreateCommunity";
+import CommunityDetails from "./pages/communities/CommunityDetails";
 
 function App() {
   const { token } = useAuth();
@@ -45,10 +47,17 @@ function App() {
           />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/meal-planner" element={<MealPlanner />} />
-          <Route path="/communities" element={<Communities />} />
+
           <Route path="/saved" element={<Saved />} />
 
           <Route path="/addRecipe" element={<AddRecipe />} />
+
+          <Route path="/communities" element={<Communities />} />
+          <Route path="/createCommunity" element={<CreateCommunity />} />
+          <Route
+            path="/community/:communityId"
+            element={<CommunityDetails />}
+          />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -4,6 +4,7 @@ import { userApi } from "../apis/userApi";
 import authReducer from "../slices/authSlice";
 import recipeReducer from "../slices/recipeSlice";
 import { recipeApi } from "../apis/recipeApi";
+import { communityApi } from "../apis/communityApi";
 
 const appReducer = combineReducers({
   ui: uiReducer,
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
   recipeSlice: recipeReducer,
   [userApi.reducerPath]: userApi.reducer,
   [recipeApi.reducerPath]: recipeApi.reducer,
+  [communityApi.reducerPath]: communityApi.reducer,
 });
 
 type State = ReturnType<typeof appReducer>;
