@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { addCommentValidator } from "../validators/commentValidator";
 import Comment from "../models/Comment";
 
-export const addComment = (req:Request,res: Response,next: NextFunction) =>{
+export const addComment = async (req:Request,res: Response,next: NextFunction) =>{
     try {
         const {postId} = req.params;
         const {commentDetails} = req.body;
@@ -19,7 +19,9 @@ export const addComment = (req:Request,res: Response,next: NextFunction) =>{
             originalPost: postId
         })
 
-        return res.send(newComment)
+        newComment.save()
+
+        return res.json(newComment)
 
 
     } catch (error) {
@@ -27,3 +29,15 @@ export const addComment = (req:Request,res: Response,next: NextFunction) =>{
     }
 }
 
+export const getAllPostComment = async(req:Request,res:Response,next:NextFunction) =>{
+    try {
+        const {postId} = req.params;
+
+        const allComments = await Comment.find({originalPost: postId})
+
+        res.json(allComments)
+
+    } catch (error) {
+        next(error)
+    }
+}
