@@ -41,3 +41,27 @@ export const getAllPostComment = async(req:Request,res:Response,next:NextFunctio
         next(error)
     }
 }
+
+export const updateComment = async(req:Request,res:Response,next:NextFunction) =>{
+    try {
+        const {commentId, postId} = req.params
+        const {commentDetails} = req.body
+        const userId = req.user?._id
+
+        const { error } = addCommentValidator(req.body)  
+        if(error){
+            return res.status(400).send(error.details[0].message)
+        }
+
+        const comment = await Comment.findOne({_id: commentId, originalPost: postId, commentOwner: userId})
+        if(!comment) return res.status(404).send('Comment did not found')
+
+        comment.commentDetails = commentDetails
+        await comment.save()
+
+        res.json(comment)
+
+    } catch (error) {
+        next(error)
+    }
+}
