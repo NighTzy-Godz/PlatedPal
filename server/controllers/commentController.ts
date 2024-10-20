@@ -65,3 +65,16 @@ export const updateComment = async(req:Request,res:Response,next:NextFunction) =
         next(error)
     }
 }
+
+export const deleteComment = async(req: Request, res:Response, next: NextFunction) =>{
+    try {
+        const commentId = req.params
+        
+        const comment = await Comment.findByIdAndDelete(commentId)
+        if(!comment) return res.status(404).send('Specific Comment did not found')
+
+        res.json(comment)
+    } catch (error) {
+        next(error)
+    }
+}
