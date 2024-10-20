@@ -31,14 +31,25 @@ export const addComment = async (req:Request,res: Response,next: NextFunction) =
 
 export const getAllPostComment = async(req:Request,res:Response,next:NextFunction) =>{
     try {
+        const LIMIT = 5
         const {postId} = req.params;
+        const {currPage = 1} = req.query
 
-        const allComments = await Comment.find({originalPost: postId})
+        const page = Number(currPage)
 
-        res.json(allComments)
+        const allComments = await Comment.find({originalPost: postId}).sort({createdAt: -1}).skip((page - 1) * LIMIT).limit(LIMIT)
+        const totalCount = await Comment.countDocuments({originalPost: postId})
+
+        const resBody = {
+            data: allComments,
+            currPage: page,
+            totalPages: Math.ceil(totalCount / LIMIT),
+        } 
+
+        res.json(resBody)
 
     } catch (error) {
-        next(error)
+        next(error) 
     }
 }
 
