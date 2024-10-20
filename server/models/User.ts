@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 const DB_URL = process.env.DB_URL as string;
 const jwtSecretPass = process.env.jwtSecretPass as string;
 
+console.log(DB_URL)
+
 mongoose
   .connect(DB_URL)
   .then(() => console.log("Connected to the datebase - User"))
