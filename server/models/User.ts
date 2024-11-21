@@ -41,7 +41,7 @@ const userSchema: Schema<IUser> = new Schema({
   pfp: {
     type: String,
     default:
-      "https://res.cloudinary.com/doggodoggo228/image/upload/v1719548694/account_iu1nvc.png",
+      "https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png",
   },
 
   bio: {

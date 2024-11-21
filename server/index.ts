@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 const app = express();
 const PORT = 8080;
 
-import userRoute from "./router/userRoute";
+import userRoute from "./layer_interface/routes/UserRoutes";
 import recipeRoute from "./router/recipeRoute";
 import communityRoute from "./router/communityRoute";
 import commentRoute from "./router/commentRoute";
